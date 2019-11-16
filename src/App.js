@@ -18,12 +18,7 @@ import {
   AppointmentTooltip,
   ConfirmationDialog
 } from "@devexpress/dx-react-scheduler-material-ui";
-import IconButton from '@material-ui/core/IconButton';
-import MoreIcon from '@material-ui/icons/MoreVert';
-import Grid from '@material-ui/core/Grid';
-import Room from '@material-ui/icons/Room';
 import { withStyles } from '@material-ui/core/styles';
-import classNames from 'clsx';
 
 
 //Dummy Data
@@ -94,16 +89,12 @@ const Content = withStyles(style, { name: 'Content' })(({
 }) => (
   <AppointmentTooltip.Content {...restProps} appointmentData={appointmentData}>
         
-        <a href="www.google.com">Book this appointment</a>
+        <a href="www.google.com">Book this appointment with an id of: {appointmentData.id}</a>
 
   </AppointmentTooltip.Content>
 ));
 
-const CommandButton = withStyles(style, { name: 'CommandButton' })(({
-  classes, ...restProps
-}) => (
-  <AppointmentTooltip.CommandButton {...restProps} className={classes.commandButton} />
-));
+
 
 export default class Demo extends React.PureComponent {
   constructor(props) {
@@ -163,9 +154,8 @@ export default class Demo extends React.PureComponent {
           <TodayButton />
           <Appointments />
           <AppointmentTooltip
-            showOpenButton
+            // showOpenButton
             showDeleteButton={false}
-            commandButtonComponent={CommandButton}
             contentComponent={Content}
           >
           </AppointmentTooltip>
