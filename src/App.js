@@ -18,8 +18,15 @@ import {
   AppointmentTooltip,
   ConfirmationDialog
 } from "@devexpress/dx-react-scheduler-material-ui";
-import { DragDropProvider } from "@devexpress/dx-react-scheduler-material-ui";
+import IconButton from '@material-ui/core/IconButton';
+import MoreIcon from '@material-ui/icons/MoreVert';
+import Grid from '@material-ui/core/Grid';
+import Room from '@material-ui/icons/Room';
+import { withStyles } from '@material-ui/core/styles';
+import classNames from 'clsx';
 
+
+//Dummy Data
 const brianAvailable = [
   {
     id: 1,
@@ -29,7 +36,6 @@ const brianAvailable = [
   }
 ];
 
-//Dummy Data
 const appointments = [
   {
     id: 1,
@@ -58,72 +64,46 @@ const appointments = [
   }
 ];
 
-//   export default class Demo extends React.PureComponent {
+const style = ({ palette }) => ({
+  icon: {
+    color: palette.action.active,
+  },
+  textCenter: {
+    textAlign: 'center',
+  },
+  firstRoom: {
+    background: 'url(https://js.devexpress.com/Demos/DXHotels/Content/Pictures/Lobby-4.jpg)',
+  },
+  secondRoom: {
+    background: 'url(https://js.devexpress.com/Demos/DXHotels/Content/Pictures/MeetingRoom-4.jpg)',
+  },
+  thirdRoom: {
+    background: 'url(https://js.devexpress.com/Demos/DXHotels/Content/Pictures/MeetingRoom-0.jpg)',
+  },
+  header: {
+    height: '260px',
+    backgroundSize: 'cover',
+  },
+  commandButton: {
+    backgroundColor: 'rgba(255,255,255,0.65)',
+  },
+});
 
-//       state = {
-//         data: appointments,
-//         currentDate: '2018-06-27'
-//         // currentDate: new Date()
-//       };
+const Content = withStyles(style, { name: 'Content' })(({
+  children, appointmentData, classes, ...restProps
+}) => (
+  <AppointmentTooltip.Content {...restProps} appointmentData={appointmentData}>
+        
+        <a href="www.google.com">Book this appointment</a>
 
-//     commitChanges = ({ added, changed, deleted }) => {
-//       this.setState((state) => {
-//         let { data } = state;
-//         if (added) {
-//           const startingAddedId = data.length > 0 ? data[data.length - 1].id + 1 : 0;
-//           data = [...data, { id: startingAddedId, ...added }];
-//         }
-//         if (changed) {
-//           data = data.map(appointment => (
-//             changed[appointment.id] ? { ...appointment, ...changed[appointment.id] } : appointment));
-//         }
-//         if (deleted !== undefined) {
-//           data = data.filter(appointment => appointment.id !== deleted);
-//         }
-//         return { data };
-//       });
-//     }
+  </AppointmentTooltip.Content>
+));
 
-//     render() {
-//       const { currentDate, data } = this.state;
-
-//       return (
-//         <Paper>
-//           <Scheduler
-//             data={data}
-//             height={660}
-//           >
-//             <ViewState
-//               currentDate={currentDate}
-//               onCurrentDateChange={this.currentDateChange}
-//             />
-//             <EditingState
-//               onCommitChanges={this.commitChanges}
-//             />
-//             <IntegratedEditing />
-//             <WeekView startDayHour={5} endDayHour={19} />
-//             <DayView startDayHour={5} endDayHour={19} />
-//             <ConfirmationDialog />
-//             <Toolbar />
-//             <DateNavigator />
-//             <ViewSwitcher />
-//             <TodayButton />
-//             <Appointments />
-//             <AppointmentTooltip
-//               showOpenButton
-//               showDeleteButton
-//               // visible={true}
-//             />
-//             <DragDropProvider />
-//             <AppointmentForm />
-//           </Scheduler>
-//         </Paper>
-//       );
-//     }
-//   }
-function headerComponent() {
-  return <a href='www.reddit.com'>Test</a>
-}
+const CommandButton = withStyles(style, { name: 'CommandButton' })(({
+  classes, ...restProps
+}) => (
+  <AppointmentTooltip.CommandButton {...restProps} className={classes.commandButton} />
+));
 
 export default class Demo extends React.PureComponent {
   constructor(props) {
@@ -185,8 +165,8 @@ export default class Demo extends React.PureComponent {
           <AppointmentTooltip
             showOpenButton
             showDeleteButton={false}
-            // visible={true}
-            headerComponent={headerComponent}
+            commandButtonComponent={CommandButton}
+            contentComponent={Content}
           >
           </AppointmentTooltip>
           <AppointmentForm />
